@@ -1,8 +1,7 @@
 /// <reference types="cypress"/>
-//const { faker } = require("@faker-js/faker");
+
 const faker = require("@faker-js/faker/locale/fr");
 let username = faker.name.firstName();
-
 let city = faker.address.city();
 let card = faker.finance.creditCardNumber();
 let month = faker.date.month();
@@ -20,9 +19,7 @@ describe("Suite de test - Ajouter un produit au panier", () => {
         cy.wait(500);
         cy.get("#loginusername").type("nabil");
         cy.get("#loginpassword").type("nabil1");
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
         cy.get("#nameofuser").should("be.visible");
     });
     it("Scénario 2 - Consulter le panier", () => {
@@ -37,11 +34,9 @@ describe("Suite de test - Ajouter un produit au panier", () => {
         cy.get("#city").type(city);
         cy.get("#card").type(card);
         cy.get("#month").type(month);
-        cy.get("#year").type("2022");
-        cy.get(
-            "#orderModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#year").type("2023");
+        cy.get("#orderModal").find(".btn-primary").click();
         cy.get(".lead").should("contain", "Name");
-        cy.get(".confirm").click();
+        cy.contains("OK").click();
     });
 });

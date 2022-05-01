@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-//Solution 1 avec Fixtures
+
 describe("Suite de test - Création User", () => {
     before(() => {
         cy.visit("https://www.demoblaze.com/");
@@ -11,34 +11,28 @@ describe("Suite de test - Création User", () => {
     });
     it("Scénario 1 création user", () => {
         cy.wait(500);
-        cy.get("#sign-username").type("ms");
+        cy.get("#sign-username").type("ms").should;
         cy.get("#sign-password").type("usernabil2");
-        cy.get(
-            "#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#signInModal").find(".btn-primary").click();
     });
     it("Scénario 2 création user - User existant", () => {
         cy.wait(500);
         cy.get("#sign-username").type("xs");
         cy.get("#sign-password").type("usernabil1");
-        cy.get(
-            "#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#signInModal").find(".btn-primary").click();
         cy.on("window:alert", (Text) => {
             expect(Text).contain("This user already exist.");
         });
         cy.on("window:confirm", () => true);
-        cy.get(
-            "#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-secondary"
-        ).click();
+        cy.get("#signInModal").click();
     });
 });
 
 // solution 2 avec Faker
 /*const { faker } = require("@faker-js/faker");
 
-let username = faker.name.firstName(); //username
-let password = faker.internet.password(); //password
+let username = faker.name.firstName(); 
+let password = faker.internet.password();
 describe("Création user", () => {
     before(function() {
         cy.visit("https://www.demoblaze.com/");

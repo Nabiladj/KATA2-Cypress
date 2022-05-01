@@ -154,7 +154,7 @@
     });
 });*/
 
-//avec fixtures asynchrone et syntaxe THIS (ne fonctionne pas avec fonction flèche)
+//avec fixtures asynchrone
 /*describe("Se connecter", () => {
     beforeEach(() => {
         cy.visit("https://www.demoblaze.com/");
@@ -234,8 +234,7 @@
     });
 });*/
 
-//avec require et import (synchrone) -la variable require n'existe pas
-//const users = require("../fixtures/jdduser.json");
+//avec import (synchrone)
 import * as users from "../fixtures/jdduser.json";
 
 describe("Suite de test - Se connecter", () => {
@@ -250,11 +249,9 @@ describe("Suite de test - Se connecter", () => {
     it("Scénario 1 Username OK password OK", function() {
         const user = users[0];
         cy.wait(500);
-        cy.get("#loginusername").type(user.username);
+        cy.get("#loginusername").type(user.username).should("have.value", username);
         cy.get("#loginpassword").type(user.password);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
 
         cy.get("#nameofuser").should("be.visible");
         cy.url().should("to.include", ".demoblaze");
@@ -262,52 +259,40 @@ describe("Suite de test - Se connecter", () => {
     it("Scénario 2 Username OK password KO", function() {
         const user = users[1];
         cy.wait(500);
-        cy.get("#loginusername").type(user.username);
+        cy.get("#loginusername").type(user.username).should("have.value", username);
         cy.get("#loginpassword").type(user.password);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
 
         cy.on("window:alert", (Text) => {
             expect(Text).contain("Wrong password.");
         });
         cy.on("window:confirm", () => true);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-secondary"
-        ).click();
+        cy.get("#logInModal").find(".btn-secondary").click();
     });
     it("Scénario 3 Username KO password OK", function() {
         const user = users[2];
         cy.wait(500);
-        cy.get("#loginusername").type(user.username);
+        cy.get("#loginusername").type(user.username).should("have.value", username);
         cy.get("#loginpassword").type(user.password);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
 
         cy.on("window:alert", (Text) => {
             expect(Text).contain("User does not exist.");
         });
         cy.on("window:confirm", () => true);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-secondary"
-        ).click();
+        cy.get("#logInModal").find(".btn-secondary").click();
     });
     it("Scénario 4 Username KO password KO", function() {
         const user = users[3];
         cy.wait(500);
-        cy.get("#loginusername").type(user.username);
+        cy.get("#loginusername").type(user.username).should("have.value", username);
         cy.get("#loginpassword").type(user.password);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
 
         cy.on("window:alert", (Text) => {
             expect(Text).contain("User does not exist.");
         });
         cy.on("window:confirm", () => true);
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-secondary"
-        ).click();
+        cy.get("#logInModal").find(".btn-secondary").click();
     });
 });

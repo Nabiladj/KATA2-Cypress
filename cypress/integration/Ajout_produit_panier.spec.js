@@ -13,19 +13,18 @@ describe("Suite de test - Ajouter un produit au panier", () => {
         cy.wait(500);
         cy.get("#loginusername").type("nabil");
         cy.get("#loginpassword").type("nabil1");
-        cy.get(
-            "#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary"
-        ).click();
+        cy.get("#logInModal").find(".btn-primary").click();
         cy.get("#nameofuser").should("be.visible");
     });
     it("Scénario 2 - Sélectionner un article", () => {
         cy.get(".hrefch").eq(0).click();
-        cy.get(".price-container").should("contain", "$360");
+        cy.get(".price-container").should("contain.text", "$360");
         cy.get(".btn").should("be.visible");
     });
 
     it("Scénario 3 - Ajouter le produit au panier", () => {
-        cy.get(".col-sm-12 > .btn").click();
+        cy.get(".col-sm-12").find(".btn").click();
+
         //Product added
         cy.on("window:alert", (Text) => {
             expect(Text).contain("Product added");
